@@ -2,15 +2,14 @@
  @model List<Category>
 
 <h1>Category list </h1>
-<table class=" = table table-bordered table-striped "
-
+<table class=" = table table-bordered table align-text-bottom"
 <thead>
 <tr>
-    <th>
+    <th class="text-white">
     Category name
     </th>
 
-    <th>
+    <th class="text-white">
      Display Order
     </th>
 </tr>
@@ -22,11 +21,11 @@
     {
       <tr>
     
-          <td>
+          <td class="text-light">
                @obj.Name
           </td>
 
-           <td>
+           <td class="text-light">
                @obj.DisplayOrder
            </td>
 
