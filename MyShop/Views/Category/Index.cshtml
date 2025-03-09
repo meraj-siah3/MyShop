@@ -16,7 +16,7 @@
     </div>
 
 
-    <table class=" = table table-bordered table align-text-bottom"
+    <table class=" = table table-bordered table align-text-bottom">
 <thead>
 <tr>
     <th class="text-white">
@@ -26,6 +26,7 @@
     <th class="text-white">
      Display Order
     </th>
+    <th></th>
 </tr>
 </thead>
 
@@ -41,6 +42,21 @@
 
     <td class="text-light">
        @obj.DisplayOrder
+   </td>
+   <td>
+       <div class="w-100 btn-group" role="group">
+           <a asp-controller="Category" asp-action="Edit" class="btn btn-primary mx-2">
+               <i class="bi bi-pencil-square"></i>Edit
+               
+           </a>
+                <a asp-controller="Category" asp-action="Delete" class="btn btn-info mx-2">
+                       <i class="bi bi-trash3-fill"></i>Delete
+
+               </a>
+
+
+
+       </div>
    </td>
 
     </tr>
