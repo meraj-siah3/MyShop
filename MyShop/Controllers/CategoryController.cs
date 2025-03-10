@@ -68,6 +68,37 @@ namespace MyShop.Controllers
             return View();
         }
 
+        public IActionResult delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            Category? CategoryDb = _db.Categories.Find(id);
+            if (CategoryDb == null)
+            {
+                return NotFound();
+            }
+            return View(CategoryDb);
+        }
 
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+
+            Category? obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+
+
+
+
+        }
     }
 }
