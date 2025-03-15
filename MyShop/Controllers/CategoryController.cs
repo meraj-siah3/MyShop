@@ -1,4 +1,5 @@
 ﻿using DataAccess.data;
+using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.Models;
@@ -10,16 +11,16 @@ namespace MyShop.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfwork;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfwork = unitOfWork;
 
         }
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _db.Categories.ToList();
+            List<Category> objCategoryList = _unitOfwork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -33,8 +34,8 @@ namespace MyShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _unitOfwork.Category.Add(obj);
+                _unitOfwork.Save();
                 TempData["success"] = "Category Created Successfully";
 
                 return RedirectToAction("Index");
@@ -48,7 +49,7 @@ namespace MyShop.Controllers
             {
                 return NotFound();
             }
-            Category? CategoryDb = _db.Categories.Find(id);
+            Category? CategoryDb = _unitOfwork.Category.GetById(u => u.Id == id);
             if (CategoryDb == null)
             {
                 return NotFound();
@@ -61,8 +62,8 @@ namespace MyShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _unitOfwork.Category.Update(obj);
+                _unitOfwork.Save();
                 TempData["success"] = "Category Updated Successfully";
 
                 return RedirectToAction("Index");
@@ -76,7 +77,7 @@ namespace MyShop.Controllers
             {
                 return NotFound();
             }
-            Category? CategoryDb = _db.Categories.Find(id);
+            Category? CategoryDb = _unitOfwork.Category.GetById(u => u.Id == id);
             if (CategoryDb == null)
             {
                 return NotFound();
@@ -89,13 +90,13 @@ namespace MyShop.Controllers
         public IActionResult DeletePost(int? id)
         {
 
-            Category? obj = _db.Categories.Find(id);
+            Category? obj = _unitOfwork.Category.GetById(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges();
+            _unitOfwork.Category.Remove(obj);
+            _unitOfwork.Save();
             TempData["success"] = "Category Deleted Successfully";
             return RedirectToAction("Index");
 
