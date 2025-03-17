@@ -7,8 +7,9 @@ using System;
 using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace MyShop.Controllers
+namespace MyShop.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfwork;
