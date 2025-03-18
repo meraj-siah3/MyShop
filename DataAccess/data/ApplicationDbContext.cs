@@ -16,6 +16,7 @@ namespace DataAccess.data
 
         }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
@@ -23,6 +24,12 @@ namespace DataAccess.data
             new Category { Id = 2, Name = "scifi", DisplayOrder = 2 },
             new Category { Id = 3, Name = "history", DisplayOrder = 3 }
             );
+
+            modelBuilder.Entity<Product>().HasData(
+                new Product { Id=1,Title= "Shoes",Description= "For gentlemen and for running",Price=30 },
+                new Product { Id=2,Title= "pants",Description="For gentlemen and for party",Price=25 }
+               
+                );
         }
     }
 }
