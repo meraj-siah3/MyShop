@@ -1,0 +1,84 @@
+﻿@using Models.Models
+ @model List<Product>
+ <partial name="_notification" />
+
+<div class="container">
+    <div class="row pt-4 pb-1">
+        <div class="col-6">
+            <h2 class="text-white">
+                 Product List
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+             <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create New Product
+             </a>
+        </div>
+    </div>
+
+
+    <table class=" = table table-bordered table align-text-bottom">
+<thead>
+<tr>
+    <th class="text-white">
+    Title
+    </th>
+
+    <th class="text-white">
+    Description
+    </th>
+
+    <th class="text-white">
+     Price
+    </th>
+
+   <th class="text-white">
+      Category
+     </th>
+
+    <th></th>
+</tr>
+</thead>
+
+
+<tbody>
+ @foreach (var obj in Model)
+{
+   <tr>
+
+     <td class="text-light">
+       @obj.Title
+     </td>
+
+    <td class="text-light">
+       @obj.Description
+   </td>
+
+     <td class="text-light">
+       @obj.Price
+     </td>
+
+   <td class="text-light">
+    
+   </td>
+   <td>
+       <div class="w-100 btn-group" role="group">
+           <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-info mx-2">
+               <i class="bi bi-pencil-square"></i>Edit
+               
+           </a>
+                            <a asp-controller="Product" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
+                       <i class="bi bi-trash3-fill"></i>Delete
+
+               </a>
+
+              
+
+       </div>
+   </td>
+
+    </tr>
+ }
+</tbody>
+</table>
+</div>
