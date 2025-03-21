@@ -19,16 +19,19 @@ namespace DataAccess.data
         public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
             modelBuilder.Entity<Category>().HasData(
             new Category { Id = 1, Name = "action", DisplayOrder = 1 },
             new Category { Id = 2, Name = "scifi", DisplayOrder = 2 },
             new Category { Id = 3, Name = "history", DisplayOrder = 3 }
             );
 
-            modelBuilder.Entity<Product>().HasData(
-                new Product { Id=1,Title= "Shoes",Description= "For gentlemen and for running",Price=30 },
-                new Product { Id=2,Title= "pants",Description="For gentlemen and for party",Price=25 }
-               
+           modelBuilder.Entity<Product>().HasData(
+                new Product { Id=1,Title= "Shoes",Description= "For gentlemen and for running",Price=30,CategoryId=1,ImageUrl="" },
+                new Product { Id=2,Title= "pants",Description="For gentlemen and for party",Price=25,CategoryId = 1,ImageUrl="" },
+                new Product { Id = 3, Title = "paants", Description = "For gentlemen and for party", Price = 25,CategoryId=2,ImageUrl = "" }
+
                 );
         }
     }

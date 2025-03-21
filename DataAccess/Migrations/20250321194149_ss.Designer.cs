@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250318101618_products")]
-    partial class products
+    [Migration("20250321194149_ss")]
+    partial class ss
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,9 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -86,12 +89,15 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Description = "For gentlemen and for running",
                             Price = 30.0,
                             Title = "Shoes"
@@ -99,10 +105,30 @@ namespace DataAccess.Migrations
                         new
                         {
                             Id = 2,
+                            CategoryId = 1,
                             Description = "For gentlemen and for party",
                             Price = 25.0,
                             Title = "pants"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 2,
+                            Description = "For gentlemen and for party",
+                            Price = 25.0,
+                            Title = "paants"
                         });
+                });
+
+            modelBuilder.Entity("Models.Models.Product", b =>
+                {
+                    b.HasOne("Models.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

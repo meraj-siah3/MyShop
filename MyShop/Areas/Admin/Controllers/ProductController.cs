@@ -1,9 +1,11 @@
 ﻿using DataAccess.data;
 using DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -22,11 +24,18 @@ namespace MyShop.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfwork.Product.GetAll().ToList();
+       
             return View(objProductList);
         }
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _unitOfwork.Category.GetAll().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Id.ToString()
+            });
+            ViewBag.CategoryList = CategoryList;
             return View();
         }
 
