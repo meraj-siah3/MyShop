@@ -1,5 +1,5 @@
 ﻿@using Models.Models
-@model Product
+@model ProductVM
 
 
 <form method="post">
@@ -14,31 +14,31 @@
 
         <div class="mb-3">
 
-            <label asp-for="Title" class="p-0"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title" class="text-info "></span>
+            <label asp-for="Product.Title" class="p-0"></label>
+            <input asp-for="Product.Title" class="form-control" />
+            <span asp-validation-for="Product.Title" class="text-info "></span>
         </div>
 
         <div class="mb-3">
-            <label asp-for="Description" class="p-0"></label>
-            <input asp-for="Description" class="form-control" />
-            <span asp-validation-for="Description" class="text-info"></span>
-
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Price" class="p-0"></label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-info"></span>
+            <label asp-for="Product.Description" class="p-0"></label>
+            <input asp-for="Product.Description" class="form-control" />
+            <span asp-validation-for="Product.Description" class="text-info"></span>
 
         </div>
 
         <div class="mb-3">
-            <label asp-for="CategoryId" class="p-0"></label>
-            <select asp-for="CategoryId" asp-items="ViewBag.CategoryList" class="form-select">
+            <label asp-for="Product.Price" class="p-0"></label>
+            <input asp-for="Product.Price" class="form-control" />
+            <span asp-validation-for="Product.Price" class="text-info"></span>
+
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Product.CategoryId" class="p-0"></label>
+            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select shadow">
                 <option disabled selected> Select Category</option>
             </select>
-            <span asp-validation-for="Price" class="text-info"></span>
+            <span asp-validation-for="Product.CategoryId" class="text-info"></span>
 
         </div>
 
