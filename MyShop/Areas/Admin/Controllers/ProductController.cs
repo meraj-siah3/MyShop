@@ -16,75 +16,77 @@ namespace MyShop.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfwork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfwork = unitOfWork;
-
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfwork.Product.GetAll().ToList();
-       
+
             return View(objProductList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
             ProductVM productVM = new()
             {
+              
                 CategoryList = _unitOfwork.Category.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
                 }),
+                Product = new Product()
             };
-            return View(productVM);
+
+            if(id==0 || id == null)
+            {
+                //create
+                return View(productVM);
+            }
+            else
+            {
+                //update
+                productVM.Product = _unitOfwork.Product.GetById(u => u.Id == id);
+                return View(productVM);
+            }
+           
         }
-        
+
 
         [HttpPost]
-        public IActionResult Create(Product obj)
+        public IActionResult Upsert(ProductVM obj, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfwork.Product.Add(obj);
+                string wwwRootPhath = _webHostEnvironment.WebRootPath;
+                if (file != null)
+                {
+                    //finaly name
+                    string fileName = Guid.NewGuid().ToString() +Path.GetExtension(file.Name);
+                    //finaly masir
+                    string productPhath = Path.Combine(wwwRootPhath, @"Images\Product");
+                }
+              
+                _unitOfwork.Product.Add(obj.Product);
                 _unitOfwork.Save();
                 TempData["success"] = "Product Created Successfully";
 
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+                obj.CategoryList = _unitOfwork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+
+            return View(obj);
         }
-
-        public IActionResult Edit(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            Product? ProductDb = _unitOfwork.Product.GetById(u => u.Id == id);
-            if (ProductDb == null)
-            {
-                return NotFound();
-            }
-            return View(ProductDb);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfwork.Product.Update(obj);
-                _unitOfwork.Save();
-                TempData["success"] = "Product Updated Successfully";
-
-                return RedirectToAction("Index");
-            }
-            return View();
-        }
-
         public IActionResult delete(int? id)
         {
             if (id == null || id == 0)

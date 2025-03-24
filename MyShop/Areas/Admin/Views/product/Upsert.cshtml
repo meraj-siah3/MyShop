@@ -2,13 +2,14 @@
 @model ProductVM
 
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
+    <input asp-for="Product.Id"hidden />
     <div class="border p-3 mt-3 bg-body">
 
         <div class="row pb-3">
 
             <h2 class="text-white">
-            <i class="bi bi-plus-circle"></i>  Create Product
+                @(Model.Product.Id!=0?"Update":"Create") Product
             </h2>
         </div>
 
@@ -33,6 +34,7 @@
 
         </div>
 
+
         <div class="mb-3">
             <label asp-for="Product.CategoryId" class="p-0"></label>
             <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select shadow">
@@ -43,10 +45,25 @@
         </div>
 
 
+        <div class="mb-3">
+            <label asp-for="Product.ImageUrl" class="p-0"></label>
+            <input type="file" class="form-control" />
+            <span asp-validation-for="Product.ImageUrl" class="text-info"></span>
+
+        </div>
+
+
 
         <div class="row">
             <div class="col-6">
+                @if (Model.Product.Id != 0)
+                {
+                    <button type="submit" class="btn  btn-info form-control">Update </button>
+                }
+                else
+                {
                 <button type="submit" class="btn  btn-info form-control">Create </button>
+                }
             </div>
 
             <div class="col-6 p">
