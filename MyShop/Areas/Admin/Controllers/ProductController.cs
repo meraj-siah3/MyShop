@@ -69,7 +69,12 @@ namespace MyShop.Areas.Admin.Controllers
                     //finaly name
                     string fileName = Guid.NewGuid().ToString() +Path.GetExtension(file.Name);
                     //finaly masir
-                    string productPhath = Path.Combine(wwwRootPhath, @"Images\Product");
+                    string productPhath = Path.Combine(wwwRootPhath, @"images\product");
+                    using( var fileStream = new FileStream(Path.Combine(productPhath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    obj.Product.ImageUrl = @"\images\product\"+fileName;
                 }
               
                 _unitOfwork.Product.Add(obj.Product);
