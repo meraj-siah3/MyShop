@@ -63,18 +63,18 @@ namespace MyShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPhath = _webHostEnvironment.WebRootPath;
                 if (file != null)
                 {
+                    string wwwRootPhath = _webHostEnvironment.WebRootPath;
                     //finaly name
-                    string fileName = Guid.NewGuid().ToString() +Path.GetExtension(file.Name);
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     //finaly masir
-                    string productPhath = Path.Combine(wwwRootPhath, @"images\product");
+                    string productPhath = Path.Combine(wwwRootPhath, @"Images\Product");
                     using( var fileStream = new FileStream(Path.Combine(productPhath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-                    obj.Product.ImageUrl = @"\images\product\"+fileName;
+                    obj.Product.ImageUrl = @"\Images\Product\" + fileName;
                 }
               
                 _unitOfwork.Product.Add(obj.Product);

@@ -2,35 +2,35 @@
 @model ProductVM
 
 
-<form method="post" enctype="multipart/form-data">
-    <input asp-for="Product.Id"hidden />
-    <div class="row">
+<form method="post" class="form-custom" enctype="multipart/form-data">
+    <input asp-for="Product.Id" hidden />
+    <div class="row  ">
 
-            <div class="border p-3 mt-3 bg-body">
-            <div class=" col-9 border rounded p-2  ">
+        <div class=" border p-2 mt-2 bg-body d-flex">
+            <div class=" col-10 border rounded p-2  ">
 
-                <div class="row pb-3">
+                <div class="row pb-2">
 
                     <h2 class="text-white">
                         @(Model.Product.Id != 0 ? "Update" : "Create") Product
                     </h2>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 ">
 
                     <label asp-for="Product.Title" class="p-0"></label>
                     <input asp-for="Product.Title" class="form-control" />
                     <span asp-validation-for="Product.Title" class="text-info "></span>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 ">
                     <label asp-for="Product.Description" class="p-0"></label>
                     <input asp-for="Product.Description" class="form-control" />
                     <span asp-validation-for="Product.Description" class="text-info"></span>
 
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3 ">
                     <label asp-for="Product.Price" class="p-0"></label>
                     <input asp-for="Product.Price" class="form-control" />
                     <span asp-validation-for="Product.Price" class="text-info"></span>
@@ -38,7 +38,7 @@
                 </div>
 
 
-                <div class="mb-3">
+                <div class="mb-3 ">
                     <label asp-for="Product.CategoryId" class="p-0"></label>
                     <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select shadow">
                         <option disabled selected> Select Category</option>
@@ -48,7 +48,8 @@
                 </div>
 
 
-                <div class="mb-3">
+
+                <div class="mb-3 ">
                     <label asp-for="Product.ImageUrl" class="p-0"></label>
                     <input type="file" name="file" class="form-control" />
                     <span asp-validation-for="Product.ImageUrl" class="text-info"></span>
@@ -73,17 +74,20 @@
                         <a asp-controller="Product" asp-action="Index" class="btn btn-primary border form-control">Back To List</a>
                     </div>
 
-            </div>
                 </div>
+            </div>
+            <div class="col-2 p-2">
+                <img  alt="Image" src="@Model.Product.ImageUrl" width="100%"
+                     style="border-radius: 5px; border: 1px solid
+#bbb9b9" height="200px" />
 
+            </div>
         </div>
-        <div class="col-2">
-
-        </div>
+      
     </div>
-   
-   
-    </form>
+
+
+</form>
 
 
 
