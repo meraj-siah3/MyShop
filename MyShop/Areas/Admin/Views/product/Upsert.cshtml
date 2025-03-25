@@ -4,74 +4,85 @@
 
 <form method="post" enctype="multipart/form-data">
     <input asp-for="Product.Id"hidden />
-    <div class="border p-3 mt-3 bg-body">
+    <div class="row">
 
-        <div class="row pb-3">
+            <div class="border p-3 mt-3 bg-body">
+            <div class=" col-9 border rounded p-2  ">
 
-            <h2 class="text-white">
-                @(Model.Product.Id!=0?"Update":"Create") Product
-            </h2>
-        </div>
+                <div class="row pb-3">
 
-        <div class="mb-3">
+                    <h2 class="text-white">
+                        @(Model.Product.Id != 0 ? "Update" : "Create") Product
+                    </h2>
+                </div>
 
-            <label asp-for="Product.Title" class="p-0"></label>
-            <input asp-for="Product.Title" class="form-control" />
-            <span asp-validation-for="Product.Title" class="text-info "></span>
-        </div>
+                <div class="mb-3">
 
-        <div class="mb-3">
-            <label asp-for="Product.Description" class="p-0"></label>
-            <input asp-for="Product.Description" class="form-control" />
-            <span asp-validation-for="Product.Description" class="text-info"></span>
+                    <label asp-for="Product.Title" class="p-0"></label>
+                    <input asp-for="Product.Title" class="form-control" />
+                    <span asp-validation-for="Product.Title" class="text-info "></span>
+                </div>
 
-        </div>
+                <div class="mb-3">
+                    <label asp-for="Product.Description" class="p-0"></label>
+                    <input asp-for="Product.Description" class="form-control" />
+                    <span asp-validation-for="Product.Description" class="text-info"></span>
 
-        <div class="mb-3">
-            <label asp-for="Product.Price" class="p-0"></label>
-            <input asp-for="Product.Price" class="form-control" />
-            <span asp-validation-for="Product.Price" class="text-info"></span>
+                </div>
 
-        </div>
+                <div class="mb-3">
+                    <label asp-for="Product.Price" class="p-0"></label>
+                    <input asp-for="Product.Price" class="form-control" />
+                    <span asp-validation-for="Product.Price" class="text-info"></span>
 
-
-        <div class="mb-3">
-            <label asp-for="Product.CategoryId" class="p-0"></label>
-            <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select shadow">
-                <option disabled selected> Select Category</option>
-            </select>
-            <span asp-validation-for="Product.CategoryId" class="text-info"></span>
-
-        </div>
+                </div>
 
 
-        <div class="mb-3">
-            <label asp-for="Product.ImageUrl" class="p-0"></label>
-            <input type="file" name="file" class="form-control" />
-            <span asp-validation-for="Product.ImageUrl" class="text-info"></span>
+                <div class="mb-3">
+                    <label asp-for="Product.CategoryId" class="p-0"></label>
+                    <select asp-for="Product.CategoryId" asp-items="@Model.CategoryList" class="form-select shadow">
+                        <option disabled selected> Select Category</option>
+                    </select>
+                    <span asp-validation-for="Product.CategoryId" class="text-info"></span>
 
-        </div>
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="Product.ImageUrl" class="p-0"></label>
+                    <input type="file" name="file" class="form-control" />
+                    <span asp-validation-for="Product.ImageUrl" class="text-info"></span>
+
+                </div>
 
 
 
-        <div class="row">
-            <div class="col-6">
-                @if (Model.Product.Id != 0)
-                {
-                    <button type="submit" class="btn  btn-info form-control">Update </button>
-                }
-                else
-                {
-                <button type="submit" class="btn  btn-info form-control">Create </button>
-                }
+                <div class="row">
+                    <div class="col-6">
+                        @if (Model.Product.Id != 0)
+                        {
+                            <button type="submit" class="btn  btn-info form-control">Update </button>
+                        }
+                        else
+                        {
+                            <button type="submit" class="btn  btn-info form-control">Create </button>
+                        }
+                    </div>
+
+                    <div class="col-6 p">
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-primary border form-control">Back To List</a>
+                    </div>
+
             </div>
+                </div>
 
-            <div class="col-6 p">
-                <a asp-controller="Product" asp-action="Index" class="btn btn-primary border form-control">Back To List</a>
-            </div>
+        </div>
+        <div class="col-2">
 
         </div>
     </div>
+   
+   
     </form>
 
 
