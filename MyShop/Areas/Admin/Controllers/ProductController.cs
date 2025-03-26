@@ -1,5 +1,6 @@
 ﻿using DataAccess.data;
 using DataAccess.Repository.IRepository;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -65,19 +66,40 @@ namespace MyShop.Areas.Admin.Controllers
             {
                 if (file != null)
                 {
-                    string wwwRootPhath = _webHostEnvironment.WebRootPath;
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
                     //finaly name
                     string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     //finaly masir
-                    string productPhath = Path.Combine(wwwRootPhath, @"Images\Product");
-                    using( var fileStream = new FileStream(Path.Combine(productPhath, fileName), FileMode.Create))
+                    string productPath = Path.Combine(wwwRootPath, @"Images\Product");
+
+                    if (!string.IsNullOrEmpty(obj.Product.ImageUrl))
+                    {
+                        //delete old image
+                        var OldImagePath = Path.Combine(wwwRootPath, obj.Product.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(OldImagePath))
+                        {
+                            System.IO.File.Delete(OldImagePath);
+                        }
+
+                    }
+                        //uplode new image
+                        using ( var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-                    obj.Product.ImageUrl = @"\Images\Product\" + fileName;
+
+                    obj.Product.ImageUrl = @"\Images\Product\" + fileName; 
                 }
-              
-                _unitOfwork.Product.Add(obj.Product);
+                if (obj.Product.Id == 0)
+                {
+                    _unitOfwork.Product.Add(obj.Product);
+                }
+                else
+                {
+                    _unitOfwork.Product.Update(obj.Product);
+                }
+               
                 _unitOfwork.Save();
                 TempData["success"] = "Product Created Successfully";
 

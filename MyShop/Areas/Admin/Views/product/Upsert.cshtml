@@ -4,6 +4,7 @@
 
 <form method="post" class="form-custom" enctype="multipart/form-data">
     <input asp-for="Product.Id" hidden />
+    <input asp-for="Product.ImageUrl" hidden />
     <div class="row  ">
 
         <div class=" border p-2 mt-2 bg-body d-flex">
@@ -77,9 +78,9 @@
                 </div>
             </div>
             <div class="col-2 p-2">
-                <img  alt="Image" src="@Model.Product.ImageUrl" width="100%"
-                     style="border-radius: 5px; border: 1px solid
-#bbb9b9" height="200px" />
+                <img  alt="Image" src="@Model.Product.ImageUrl" width="110%"
+                     style="border-radius: 13px; border: 2px solid
+#9370DB" height="200px" />
 
             </div>
         </div>
