@@ -26,7 +26,7 @@ namespace MyShop.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfwork.Product.GetAll().ToList();
+            List<Product> objProductList = _unitOfwork.Product.GetAll(IncludeProperties:"Category").ToList();
 
             return View(objProductList);
         }

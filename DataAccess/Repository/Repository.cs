@@ -20,6 +20,7 @@ namespace DataAccess.Repository
         {
             _db = db;
             this.dbSet = _db.Set<T>();
+            _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
 
         }
         public void Add(T entity)
@@ -27,17 +28,32 @@ namespace DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? IncludeProperties=null)
         {
             IQueryable<T> query = dbSet;
-            return query;
+            if(!string.IsNullOrEmpty(IncludeProperties))
+            {
+                foreach (var InculdeProp in IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(InculdeProp);
+                }
+            }
+
+            return query.ToList();
 
         }
 
-        public T GetById(Expression<Func<T, bool>> filter)
+        public T GetById(Expression<Func<T, bool>> filter, string? IncludeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(IncludeProperties))
+            {
+                foreach (var InculdeProp in IncludeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(InculdeProp);
+                }
+            }
             return query.FirstOrDefault();
         }
 
