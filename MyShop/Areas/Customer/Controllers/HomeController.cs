@@ -27,6 +27,14 @@ namespace MyShop.Areas.Customer.Controllers
         
         }
 
+        public IActionResult Details(int productId)
+        {
+           Product ProductList = _unitOfwork.Product.GetById(u=>u.Id== productId, IncludeProperties: "Category");
+
+            return View(ProductList);
+
+        }
+
         public IActionResult Privacy()
         {
             return View();
